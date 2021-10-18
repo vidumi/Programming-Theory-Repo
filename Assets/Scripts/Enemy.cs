@@ -23,4 +23,13 @@ public class Enemy : MonoBehaviour
         enemyRb.AddForce(lookDirection * speed);
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
+
 }
