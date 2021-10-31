@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ObjectsToFind : MonoBehaviour
 {
+
+   
     public int objectValue = 2;
+   
+
+
     private ParticleSystem explosion;
 
     private void OnCollisionEnter(Collision collision)
@@ -20,5 +26,7 @@ public abstract class ObjectsToFind : MonoBehaviour
     protected abstract void ObjectFound();
 
     protected abstract void NewObject();
+
+   
 
 }

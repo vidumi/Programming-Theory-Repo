@@ -9,6 +9,7 @@ public class LargeObject : ObjectsToFind
     public AudioClip clipToFound;
     public AudioClip audioLargeObject;
 
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -19,8 +20,8 @@ public class LargeObject : ObjectsToFind
     {
         Destroy(gameObject, 0.1f);
         gameManager.UpdateScore(objectValue);
+        gameManager.Info("look for ...");
         StartCoroutine (Reset());
-
     }
 
     IEnumerator Reset()

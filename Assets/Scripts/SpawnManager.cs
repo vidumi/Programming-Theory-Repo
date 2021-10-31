@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject[] objectsToFindPrefab;
     [SerializeField]
-    public float spawnRangePos = 10.0f;
+    private float spawnRangePos = 8.0f;
 
 
     // Start is called before the first frame update
@@ -19,8 +19,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator GenerateObjectsToFind()
     {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Nuovo oggeto da trovare");
+        yield return new WaitForSeconds(4f);
         int randomObjectsToFind = Random.Range(0, objectsToFindPrefab.Length);
         Instantiate(objectsToFindPrefab[randomObjectsToFind], GenerateSpawnPosition(), objectsToFindPrefab[randomObjectsToFind].transform.rotation);
 

@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac2fe615bac5c14f8fe2a71243f2241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectValue: 2
+  m_ObjectValue: 2
   clipToFound: {fileID: 8300000, guid: 574bd8e6857a6344ca43feeefc1c4677, type: 3}
   audioLargeObject: {fileID: 8300000, guid: fff73e0b0000ae840a63bf9d96068ba5, type: 3}
 --- !u!1001 &3548808298609040005

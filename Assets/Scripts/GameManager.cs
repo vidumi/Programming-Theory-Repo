@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,22 +10,49 @@ public class GameManager : MonoBehaviour
     public GameObject m_GameOverPanel;
     public GameObject m_InfoPanel;
     public Text m_ScoreText;
-    public Text m_LivesText;
     public Text m_InfoText;
 
     public float timeLeft = 20.0f;
     private float m_TimeLeft;
     public Text gameTimeText;
+    public Text alertText;
     public bool isTimer = false;
+
+    
 
     private bool paused;
 
-    public int lives = 3;
     private int score;
 
     private AudioSource playerAudio;
 
     private SpawnManager spawnManager;
+
+    public Text m_LivesText;
+
+    public GameObject setupPanel;
+    public GameObject inputField;
+
+
+
+    private int m_Lives = 3;
+    public int lives
+    {
+        get { return m_Lives; } // getter returns backing fieldset 
+        set
+        {
+            if ( value < 1 || value > 8)
+            {              
+                // Debug.LogError("The value must be between 1 and 8!");
+                alertText.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_Lives = value; // original setter now in if/else statement
+                m_LivesText.text = "Lives: " + m_Lives;
+            }
+        } // setter uses backi
+    }
 
     private void Awake()
     {
@@ -42,12 +70,14 @@ public class GameManager : MonoBehaviour
     {
 
         playerAudio = GetComponent<AudioSource>();
-        m_LivesText.text = "Lives: " + lives;
+        m_LivesText.text = "Lives: " + m_Lives;
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         gameTimeText.gameObject.SetActive(false);
+        alertText.gameObject.SetActive(false);
         m_TimeLeft = timeLeft;
         m_InfoPanel.gameObject.SetActive(false);
-}
+        setupPanel.gameObject.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -56,11 +86,11 @@ public class GameManager : MonoBehaviour
         {
             StartTime();
         }
-/*
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             ChangePaused();
-        }*/
+        }
 
     }
 
@@ -73,9 +103,9 @@ public class GameManager : MonoBehaviour
     }
     public void UpadateLives(int livesTochange)
     {
-        lives += livesTochange;
-        m_LivesText.text = "Lives: " + lives;
-        if (lives <= 0)
+        m_Lives += livesTochange;
+        m_LivesText.text = "Lives: " + m_Lives;
+        if (m_Lives <= 0)
         {
             GameOver();
         }
@@ -85,22 +115,34 @@ public class GameManager : MonoBehaviour
     {
         m_GameOverPanel.SetActive(true);
         StopSound();
-        ChangePaused();
+        PauseOn();
     }
     void ChangePaused()
     {
         if (!paused)
         {
-            paused = true;
-            Time.timeScale = 0;
+            PauseOn();
         }
         else
         {
-            paused = false;
-            Time.timeScale = 1;
+            PauseOff();
         }
     }
-     public void IsTimer()
+
+    private void PauseOn()
+    {
+        paused = true;
+        Time.timeScale = 0;
+    }
+    private void PauseOff()
+    {
+        paused = false;
+        Time.timeScale = 1;
+    }
+
+
+
+    public void IsTimer()
      {
         isTimer = true;
      }
@@ -138,5 +180,29 @@ public class GameManager : MonoBehaviour
     public void StopSound()
     {
         playerAudio.Stop();
+    }
+
+
+    public void SetTimeLeft()
+    {
+        lives = System.Int32.Parse(inputField.GetComponent<Text>().text);
+    }
+
+    private bool setup;
+    public void OpenSetupPanel()
+    {
+        if (!setup)
+        {
+            setupPanel.gameObject.SetActive(true);
+            ChangePaused();
+            setup = true;
+        }
+        else
+        {
+            setupPanel.gameObject.SetActive(false);
+            ChangePaused();
+            setup = false;
+
+        }
     }
 }

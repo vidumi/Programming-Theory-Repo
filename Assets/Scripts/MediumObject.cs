@@ -16,9 +16,9 @@ public class MediumObject : ObjectsToFind
 
     protected override void ObjectFound()
     {
-       // gameManager.SoundClip(clipToFound);
         Destroy(gameObject, 0.1f);
         gameManager.UpdateScore(objectValue);
+        gameManager.Info("look for ...");
         StartCoroutine(Reset());
     }
 
@@ -31,6 +31,5 @@ public class MediumObject : ObjectsToFind
     protected override void NewObject()
     {
         gameManager.Info("look for Medium object");
-        Debug.Log("Trovare Medium Object");
     }
 }
